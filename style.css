@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #141e30,
+        #243b55
+    );
+
+    color: white;
+}
+
+
+.container {
+    width: 420px;
+    max-width: 95%;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: rgba(255,255,255,0.10);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.5);
+}
+
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+
+.subtitle {
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+
+/* Players */
+
+.players {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+
+.player {
+    flex: 1;
+
+    padding: 12px;
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+}
+
+
+.player.active {
+    border: 2px solid white;
+
+    transform: scale(1.04);
+
+    background: rgba(255,255,255,0.18);
+}
+
+
+.player h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+
+.player p {
+    margin: 4px;
+}
+
+
+/* Message */
+
+#message {
+    min-height: 25px;
+
+    margin: 15px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+
+/* Game Board */
+
+.board {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin: 20px 0;
+}
+
+
+.cell {
+    height: 100px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.12);
+
+    color: white;
+
+    font-size: 45px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.cell:hover {
+    background: rgba(255,255,255,0.25);
+
+    transform: scale(1.04);
+}
+
+
+.cell:disabled {
+    cursor: not-allowed;
+}
+
+
+/* Winning animation */
+
+.cell.winner {
+    animation: winner 0.5s infinite alternate;
+}
+
+
+@keyframes winner {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
+
+}
+
+
+/* Buttons */
+
+.buttons {
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.buttons button {
+    flex: 1;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+#nextRound {
+    background: #2ecc71;
+
+    color: white;
+}
+
+
+#reset {
+    background: #e74c3c;
+
+    color: white;
+}
+
+
+.buttons button:hover {
+    transform: scale(1.03);
+}
+
+
+/* Mobile */
+
+@media(max-width: 450px) {
+
+    .cell {
+        height: 80px;
+
+        font-size: 35px;
+    }
+
+    .container {
+        padding: 18px;
+    }
+
+}
