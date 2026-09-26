@@ -1,155 +1,1037 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
 
-    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<title>Two Player Tic-Tac-Toe</title>
 
-    <title>Tic Tac Toe</title>
+<style>
 
-    <!-- CSS File -->
-    <link rel="stylesheet" href="style.css">
+*{
+    box-sizing:border-box;
+}
 
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    color:white;
+    background:linear-gradient(135deg,#101a2d,#282b68);
+}
+
+.container{
+    width:94%;
+    max-width:650px;
+    margin:auto;
+    padding:20px 0 40px;
+}
+
+.title{
+    text-align:center;
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#c4cada;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:rgba(51,61,80,.90);
+    border-radius:15px;
+    padding:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* SETUP */
+
+.setup-title{
+    text-align:center;
+    font-size:19px;
+    margin:0;
+}
+
+.setup-text{
+    text-align:center;
+    color:#c4cada;
+    font-size:12px;
+    margin:7px 0 17px;
+}
+
+.player-box{
+    background:rgba(74,85,104,.55);
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:14px;
+}
+
+.player-title{
+    color:#8fc0ff;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin:9px 0 6px;
+}
+
+input{
+    width:100%;
+    padding:11px;
+    border-radius:7px;
+    border:1px solid #34425e;
+    background:#0d162a;
+    color:white;
+    outline:none;
+}
+
+input:focus{
+    border-color:#3d7df0;
+}
+
+button{
+    border:none;
+    border-radius:7px;
+    padding:11px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.activate{
+    width:100%;
+    margin-top:13px;
+    background:#2868e8;
+}
+
+.activate:disabled,
+.start:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.start{
+    width:100%;
+    background:#159447;
+    margin-top:5px;
+}
+
+/* GAME */
+
+.hidden{
+    display:none;
+}
+
+.turn-box{
+    background:#304f89;
+    border-radius:10px;
+    padding:15px;
+    text-align:center;
+    margin-bottom:14px;
+}
+
+.turn-label{
+    font-size:12px;
+    color:#d5dcec;
+}
+
+.turn-name{
+    font-size:18px;
+    font-weight:bold;
+    margin:6px;
+}
+
+.symbol-box{
+    display:inline-block;
+    background:#50699c;
+    border-radius:20px;
+    padding:6px 13px;
+    font-size:12px;
+}
+
+.symbol-box b{
+    color:#ffd21c;
+    font-size:18px;
+}
+
+.reminder{
+    margin-top:10px;
+    color:#ccd5e8;
+    font-size:12px;
+}
+
+.players{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.player-card{
+    background:rgba(72,83,102,.65);
+    border-radius:10px;
+    text-align:center;
+    padding:12px;
+}
+
+.player-name{
+    font-weight:bold;
+}
+
+.player-symbol{
+    font-size:24px;
+    font-weight:bold;
+    color:#ffd21c;
+    margin:3px;
+}
+
+.score{
+    font-size:12px;
+    color:#ddd;
+}
+
+/* BOARD */
+
+.board{
+    width:325px;
+    max-width:90vw;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+
+.cell{
+    aspect-ratio:1;
+    background:#0d162a;
+    border:2px solid #3b4861;
+    border-radius:9px;
+    font-size:48px;
+    font-weight:bold;
+    color:white;
+}
+
+.cell:hover{
+    background:#17233d;
+}
+
+.cell.x{
+    color:white;
+}
+
+.cell.o{
+    color:#ffd21c;
+}
+
+.cell.win{
+    background:#147c3e;
+    border-color:#20df70;
+}
+
+/* RESULT */
+
+.result{
+    margin-top:16px;
+    padding:15px;
+    text-align:center;
+    background:rgba(22,143,91,.35);
+    border-radius:10px;
+}
+
+.result h3{
+    margin:0 0 7px;
+    font-size:18px;
+}
+
+.result p{
+    color:#d0ddd6;
+    font-size:12px;
+}
+
+.next{
+    width:100%;
+    background:#16a34a;
+    margin-top:5px;
+}
+
+.new-session{
+    display:block;
+    margin:16px auto 0;
+    background:#ed3434;
+    padding:10px 18px;
+}
+
+@media(max-width:420px){
+
+    .title{
+        font-size:21px;
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    .cell{
+        font-size:40px;
+    }
+
+}
+
+</style>
 </head>
 
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- Game Title -->
-        <h1>❌ Tic Tac Toe ⭕</h1>
+    <div class="title">
+        ⭐ Two Player Tic-Tac-Toe
+    </div>
 
-        <p class="subtitle">
-            Two Player Game
-        </p>
+    <div class="subtitle">
+        Complete 3 symbols in one row to win
+    </div>
 
-        <!-- Players -->
-        <div class="players">
 
-            <!-- Player X -->
-            <div class="player active" id="playerX">
+    <!-- ================= SETUP ================= -->
 
-                <h2 id="nameX">
-                    Player X
-                </h2>
+    <div id="setup" class="card">
 
-                <p>
-                    Symbol: ❌
-                </p>
+        <h2 class="setup-title">
+            Game Setup
+        </h2>
 
-                <p>
-                    Score:
-                    <span id="scoreX">0</span>
-                </p>
+        <div class="setup-text">
+            Two players can enter their names and choose their symbols.
+        </div>
 
+
+        <!-- PLAYER 1 -->
+
+        <div class="player-box">
+
+            <div class="player-title">
+                Player 1
             </div>
 
+            <label>
+                Enter Player 1 Name
+            </label>
 
-            <!-- Player O -->
-            <div class="player" id="playerO">
+            <input
+                type="text"
+                id="player1Name"
+                placeholder="Enter name"
+            >
 
-                <h2 id="nameO">
-                    Player O
-                </h2>
+            <label>
+                Choose Symbol
+            </label>
 
-                <p>
-                    Symbol: ⭕
-                </p>
+            <input
+                type="text"
+                id="player1Symbol"
+                maxlength="1"
+                placeholder="Only X or O"
+            >
 
-                <p>
-                    Score:
-                    <span id="scoreO">0</span>
-                </p>
+            <button
+                class="activate"
+                onclick="activatePlayer1()"
+            >
+                Activate Player 1
+            </button>
 
+        </div>
+
+
+        <!-- PLAYER 2 -->
+
+        <div
+            class="player-box"
+            id="player2Box"
+            style="opacity:.45"
+        >
+
+            <div class="player-title">
+                Player 2
             </div>
 
-        </div>
+            <label>
+                Enter Player 2 Name
+            </label>
 
+            <input
+                type="text"
+                id="player2Name"
+                placeholder="Enter name"
+                disabled
+            >
 
-        <!-- Turn Message -->
-        <div id="message">
+            <label>
+                Choose Symbol
+            </label>
 
-            Player X ki turn hai ❌
+            <input
+                type="text"
+                id="player2Symbol"
+                maxlength="1"
+                placeholder="Only remaining symbol"
+                disabled
+            >
 
-        </div>
-
-
-        <!-- Game Board -->
-        <div class="board">
-
-            <button class="cell"
-                    data-index="0">
-            </button>
-
-            <button class="cell"
-                    data-index="1">
-            </button>
-
-            <button class="cell"
-                    data-index="2">
-            </button>
-
-
-            <button class="cell"
-                    data-index="3">
-            </button>
-
-            <button class="cell"
-                    data-index="4">
-            </button>
-
-            <button class="cell"
-                    data-index="5">
-            </button>
-
-
-            <button class="cell"
-                    data-index="6">
-            </button>
-
-            <button class="cell"
-                    data-index="7">
-            </button>
-
-            <button class="cell"
-                    data-index="8">
+            <button
+                class="activate"
+                id="activate2"
+                onclick="activatePlayer2()"
+                disabled
+            >
+                Activate Player 2
             </button>
 
         </div>
 
 
-        <!-- Game Buttons -->
-        <div class="buttons">
-
-            <!-- Next Round -->
-            <button id="nextRound"
-                    onclick="nextRound()">
-
-                🔄 Next Round
-
-            </button>
-
-
-            <!-- Reset Game -->
-            <button id="reset"
-                    onclick="resetGame()">
-
-                🗑️ Reset Game
-
-            </button>
-
-        </div>
+        <button
+            class="start"
+            id="startButton"
+            onclick="startGame()"
+            disabled
+        >
+            Start Game
+        </button>
 
     </div>
 
 
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+    <!-- ================= GAME ================= -->
+
+    <div
+        id="game"
+        class="card hidden"
+    >
+
+        <!-- TURN -->
+
+        <div class="turn-box">
+
+            <div class="turn-label">
+                Current Turn
+            </div>
+
+            <div
+                class="turn-name"
+                id="turnName"
+            >
+                Player 1
+            </div>
+
+            <div class="symbol-box">
+                Your Symbol:
+                <b id="turnSymbol">X</b>
+            </div>
+
+            <div
+                class="reminder"
+                id="reminder"
+            >
+                Your turn
+            </div>
+
+        </div>
+
+
+        <!-- PLAYER SCORES -->
+
+        <div class="players">
+
+            <div class="player-card">
+
+                <div
+                    class="player-name"
+                    id="showPlayer1"
+                >
+                    Player 1
+                </div>
+
+                <div
+                    class="player-symbol"
+                    id="showSymbol1"
+                >
+                    X
+                </div>
+
+                <div class="score">
+                    Score:
+                    <span id="score1">0</span>
+                </div>
+
+            </div>
+
+
+            <div class="player-card">
+
+                <div
+                    class="player-name"
+                    id="showPlayer2"
+                >
+                    Player 2
+                </div>
+
+                <div
+                    class="player-symbol"
+                    id="showSymbol2"
+                >
+                    O
+                </div>
+
+                <div class="score">
+                    Score:
+                    <span id="score2">0</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOARD -->
+
+        <div
+            class="board"
+            id="board"
+        ></div>
+
+
+        <!-- RESULT -->
+
+        <div
+            id="result"
+            class="result"
+            style="display:none"
+        ></div>
+
+
+        <!-- NEW SESSION -->
+
+        <button
+            class="new-session"
+            onclick="newSession()"
+        >
+            New Session
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= VARIABLES ================= */
+
+let player1 = {};
+let player2 = {};
+
+let currentPlayer = 0;
+
+let board = [];
+
+let score1 = 0;
+let score2 = 0;
+
+let gameOver = false;
+
+
+/* ================= PLAYER 1 ================= */
+
+function activatePlayer1(){
+
+    let name =
+        document.getElementById("player1Name")
+        .value.trim();
+
+    let symbol =
+        document.getElementById("player1Symbol")
+        .value.trim()
+        .toUpperCase();
+
+
+    if(name === ""){
+
+        alert("Please enter Player 1 name.");
+        return;
+
+    }
+
+
+    if(symbol !== "X" && symbol !== "O"){
+
+        alert("Symbol sirf X ya O hona chahiye.");
+        return;
+
+    }
+
+
+    player1.name = name;
+    player1.symbol = symbol;
+
+
+    /* Remaining symbol */
+
+    let remainingSymbol =
+        symbol === "X" ? "O" : "X";
+
+
+    document.getElementById("player2Symbol")
+        .value = remainingSymbol;
+
+
+    /* Enable Player 2 */
+
+    document.getElementById("player2Name")
+        .disabled = false;
+
+    document.getElementById("player2Symbol")
+        .disabled = false;
+
+    document.getElementById("activate2")
+        .disabled = false;
+
+    document.getElementById("player2Box")
+        .style.opacity = "1";
+
+}
+
+
+/* ================= PLAYER 2 ================= */
+
+function activatePlayer2(){
+
+    let name =
+        document.getElementById("player2Name")
+        .value.trim();
+
+    let symbol =
+        document.getElementById("player2Symbol")
+        .value.trim()
+        .toUpperCase();
+
+
+    let correctSymbol =
+        player1.symbol === "X" ? "O" : "X";
+
+
+    if(name === ""){
+
+        alert("Please enter Player 2 name.");
+        return;
+
+    }
+
+
+    if(symbol !== correctSymbol){
+
+        alert(
+            "Player 2 ko remaining symbol " +
+            correctSymbol +
+            " use karna hai."
+        );
+
+        return;
+
+    }
+
+
+    player2.name = name;
+    player2.symbol = symbol;
+
+
+    document.getElementById("startButton")
+        .disabled = false;
+
+}
+
+
+/* ================= START GAME ================= */
+
+function startGame(){
+
+    document.getElementById("setup")
+        .classList.add("hidden");
+
+    document.getElementById("game")
+        .classList.remove("hidden");
+
+
+    document.getElementById("showPlayer1")
+        .textContent = player1.name;
+
+    document.getElementById("showPlayer2")
+        .textContent = player2.name;
+
+    document.getElementById("showSymbol1")
+        .textContent = player1.symbol;
+
+    document.getElementById("showSymbol2")
+        .textContent = player2.symbol;
+
+
+    score1 = 0;
+    score2 = 0;
+
+    document.getElementById("score1")
+        .textContent = "0";
+
+    document.getElementById("score2")
+        .textContent = "0";
+
+
+    currentPlayer = 0;
+
+    resetBoard();
+
+}
+
+
+/* ================= RESET BOARD ================= */
+
+function resetBoard(){
+
+    board = [
+        "", "", "",
+        "", "", "",
+        "", "", ""
+    ];
+
+    gameOver = false;
+
+    document.getElementById("result")
+        .style.display = "none";
+
+
+    renderBoard();
+
+}
+
+
+/* ================= DRAW BOARD ================= */
+
+function renderBoard(){
+
+    let boardElement =
+        document.getElementById("board");
+
+
+    boardElement.innerHTML = "";
+
+
+    board.forEach(function(value,index){
+
+        let cell =
+            document.createElement("button");
+
+
+        cell.classList.add("cell");
+
+
+        if(value === "X"){
+            cell.classList.add("x");
+        }
+
+        if(value === "O"){
+            cell.classList.add("o");
+        }
+
+
+        cell.textContent = value;
+
+
+        cell.onclick = function(){
+
+            makeMove(index);
+
+        };
+
+
+        boardElement.appendChild(cell);
+
+    });
+
+
+    updateTurn();
+
+}
+
+
+/* ================= UPDATE TURN ================= */
+
+function updateTurn(){
+
+    let player =
+        currentPlayer === 0
+        ? player1
+        : player2;
+
+
+    document.getElementById("turnName")
+        .textContent = player.name;
+
+
+    document.getElementById("turnSymbol")
+        .textContent = player.symbol;
+
+
+    document.getElementById("reminder")
+        .textContent =
+        "Reminder: " +
+        player.name +
+        " selected \"" +
+        player.symbol +
+        "\". Make your move.";
+
+}
+
+
+/* ================= MAKE MOVE ================= */
+
+function makeMove(index){
+
+    if(gameOver){
+        return;
+    }
+
+
+    /* Already occupied */
+
+    if(board[index] !== ""){
+        return;
+    }
+
+
+    let player =
+        currentPlayer === 0
+        ? player1
+        : player2;
+
+
+    board[index] = player.symbol;
+
+
+    let winningLine =
+        checkWinner(player.symbol);
+
+
+    renderBoard();
+
+
+    /* WIN */
+
+    if(winningLine){
+
+        gameOver = true;
+
+
+        if(currentPlayer === 0){
+
+            score1++;
+
+            document.getElementById("score1")
+                .textContent = score1;
+
+        }
+        else{
+
+            score2++;
+
+            document.getElementById("score2")
+                .textContent = score2;
+
+        }
+
+
+        highlightWinner(winningLine);
+
+        showWinner(player);
+
+        return;
+
+    }
+
+
+    /* DRAW */
+
+    if(board.every(function(cell){
+
+        return cell !== "";
+
+    })){
+
+        gameOver = true;
+
+        showDraw();
+
+        return;
+
+    }
+
+
+    /* CHANGE TURN */
+
+    currentPlayer =
+        currentPlayer === 0 ? 1 : 0;
+
+
+    updateTurn();
+
+}
+
+
+/* ================= WIN CHECK ================= */
+
+function checkWinner(symbol){
+
+    let winningLines = [
+
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+
+        [0,4,8],
+        [2,4,6]
+
+    ];
+
+
+    for(let line of winningLines){
+
+        if(
+            board[line[0]] === symbol &&
+            board[line[1]] === symbol &&
+            board[line[2]] === symbol
+        ){
+
+            return line;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ================= HIGHLIGHT ================= */
+
+function highlightWinner(line){
+
+    let cells =
+        document.querySelectorAll(".cell");
+
+
+    line.forEach(function(index){
+
+        cells[index]
+            .classList.add("win");
+
+    });
+
+}
+
+
+/* ================= WIN MESSAGE ================= */
+
+function showWinner(player){
+
+    let result =
+        document.getElementById("result");
+
+
+    result.style.display = "block";
+
+
+    result.innerHTML =
+
+        "<h3>🎉 " +
+        player.name +
+        " Wins!</h3>" +
+
+        "<p>" +
+        player.name +
+        " completed 3 \"" +
+        player.symbol +
+        "\" symbols in one line and received +1 point." +
+        "</p>" +
+
+        "<button class='next' onclick='nextGame()'>" +
+        "Next Game" +
+        "</button>";
+
+}
+
+
+/* ================= DRAW ================= */
+
+function showDraw(){
+
+    let result =
+        document.getElementById("result");
+
+
+    result.style.display = "block";
+
+
+    result.innerHTML =
+
+        "<h3>🤝 Draw Game!</h3>" +
+
+        "<p>" +
+        "No player completed 3 symbols in one line." +
+        "</p>" +
+
+        "<button class='next' onclick='nextGame()'>" +
+        "Next Game" +
+        "</button>";
+
+}
+
+
+/* ================= NEXT GAME ================= */
+
+function nextGame(){
+
+    currentPlayer = 0;
+
+    resetBoard();
+
+}
+
+
+/* ================= NEW SESSION ================= */
+
+function newSession(){
+
+    location.reload();
+
+}
+
+</script>
 
 </body>
-
 </html>
